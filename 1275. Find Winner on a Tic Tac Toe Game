@@ -1,0 +1,36 @@
+class Solution {
+public:
+    
+    string tictactoe(vector<vector<int>>& moves) {
+        int grid[3][3] = {{0}};
+        for(int i = 1; i <= moves.size(); i++){
+            vector<int> cord = moves[i - 1];
+            int r = cord[0];
+            int c = cord[1];
+            if(i%2 == 0){
+                grid[r][c] = 1;
+            }
+            else{
+                grid[r][c] = -1;
+            }
+        }
+        
+        int a = grid[0][0] + grid[0][1] + grid[0][2];
+        int b = grid[1][0] + grid[1][1] + grid[1][2];
+        int c = grid[2][0] + grid[2][1] + grid[2][2];
+        int d = grid[0][0] + grid[1][0] + grid[2][0];
+        int e = grid[0][1] + grid[1][1] + grid[2][1];
+        int f = grid[0][2] + grid[1][2] + grid[2][2];
+        int g = grid[0][0] + grid[1][1] + grid[2][2];
+        int h = grid[0][2] + grid[1][1] + grid[2][0];
+        
+        if(a == 3 || b == 3 || c == 3 || d == 3 || e == 3 || f == 3 || g == 3 || h == 3){
+            return "B";
+        }
+        if(a == -3 || b == -3 || c == -3 || d == -3 || e == -3 || f == -3 || g == -3 || h == -3){
+            return "A";
+        }
+
+        return moves.size() == 9 ? "Draw" : "Pending";
+    } 
+};
