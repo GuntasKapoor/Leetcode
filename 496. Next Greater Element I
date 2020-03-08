@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        stack<int> st;
+        map<int, int> next_greater;
+        
+        for(int i = 0; i < nums2.size(); i++){
+            if(st.empty() || nums2[st.top()] > nums2[i]){
+                st.push(i);
+            }
+            else if(nums2[st.top()] < nums2[i]){
+                while(!st.empty() && nums2[st.top()] < nums2[i]){
+                    next_greater[nums2[st.top()]] = nums2[i];
+                    st.pop();
+                }
+                st.push(i);
+            }
+        }
+        while(!st.empty()){
+            next_greater[nums2[st.top()]] = -1;
+            st.pop();
+        }
+        vector<int> ans;
+        for(int i = 0; i < nums1.size(); i++){
+                ans.push_back(next_greater[nums1[i]]);
+        }
+        return ans;
+    }
+};
