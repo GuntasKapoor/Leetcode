@@ -1,0 +1,26 @@
+class Solution {
+public:
+    
+    bool helper(unordered_set<int> s, int n){
+        if(n == 1){
+            return true;
+        }
+        if(s.find(n) != s.end()){
+            return false;
+        }
+        s.insert(n);
+        int sum = 0;
+        while(n > 0){
+            int a = n%10;
+            sum += a*a;
+            n/=10;
+        }
+        return helper(s, sum);
+    }
+    
+    bool isHappy(int n) {
+//      using set because to only store keys and not values
+        unordered_set<int> s;
+        return helper(s, n);
+    }
+};
