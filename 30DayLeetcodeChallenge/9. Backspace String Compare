@@ -1,0 +1,75 @@
+//Solution 1
+class Solution {
+public:
+    bool backspaceCompare(string S, string T) {        
+        int i = S.length();
+        int j = T.length();
+        int skipsS = 0, skipsT = 0;
+        while(i >= 0 || j >= 0){
+            while(i >= 0){
+                if(S[i] == '#'){
+                    skipsS++;
+                    i--;
+                }
+                else if(skipsS > 0){
+                    skipsS--;
+                    i--;
+                }
+                else{
+                    break;
+                }
+            }
+            while(j >= 0){
+                if(T[j] == '#'){
+                    skipsT++;
+                    j--;
+                }
+                else if(skipsT > 0){
+                    skipsT--;
+                    j--;
+                }
+                else{
+                    break;
+                }
+            }
+            if(i >= 0 && j >= 0 && S[i] != T[j]){
+                return false;
+            }
+            if(i < 0 && j >= 0 || i >= 0 && j < 0){
+                return false;
+            }
+            i--;
+            j--;
+        }
+        return true;
+    }
+};
+
+
+
+//Solution 2
+    string performBackspaces(string S){
+        stack<char> st;    
+        string a1 = "";
+        for(int i = 0; i < S.length(); i++){
+             if(S[i] != '#'){
+                 st.push(S[i]);
+             }
+             else{
+                 if(!st.empty()){
+                     st.pop();
+                 }
+             }
+        }
+        while(!st.empty()){
+            a1 += st.top();
+            st.pop();
+        }
+        return a1;
+    }
+    
+bool backspaceCompare(string S, string T) {
+     string s1 = performBackspaces(S);
+     string s2 = performBackspaces(T);
+     return s1 == s2;
+     }
