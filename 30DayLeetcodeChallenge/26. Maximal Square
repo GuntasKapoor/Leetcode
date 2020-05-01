@@ -1,0 +1,51 @@
+class Triplet{
+    public:
+        int first, second, third;
+        Triplet(){
+            first = 0;
+            second = 0;
+            third = 0;
+        }
+};
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& matrix) {
+        if(matrix.empty()){
+            return 0;
+        }
+        int N = matrix.size();
+        int M = matrix[0].size();
+        vector<vector<Triplet> >mat(N, vector<Triplet>(M));
+        int ans = 0;
+        for(int i = 0; i < N; i++){
+            if(matrix[i][0] == '1'){
+                mat[i][0].first = 1;
+                mat[i][0].second = 1;
+                mat[i][0].third = 1;
+                ans = 1;
+            }
+        }
+        for(int i = 0; i < M; i++){
+            if(matrix[0][i] == '1'){
+                mat[0][i].first = 1;
+                mat[0][i].second = 1;
+                mat[0][i].third = 1;
+                ans = 1;
+            }
+        }
+        
+        for(int i = 1; i < N; i++){
+            for(int j = 1; j < M; j++){
+                if(matrix[i][j] == '1'){
+                int side = min(mat[i - 1][j - 1].first, min(mat[i - 1][j].second, mat[i][j - 1].third)) + 1;
+                    ans = max(ans, side*side);
+                    mat[i][j].first = min(mat[i - 1][j - 1].first, min(mat[i - 1][j].second, mat[i][j - 1].third)) + 1;
+                    mat[i][j].second += mat[i - 1][j].second + 1;
+                    mat[i][j].third += mat[i][j - 1].third + 1;
+                    // cout<<mat[i][j].first<<" "<<mat[i][j].second<<" "<<mat[i][j].third<<endl;
+                }
+            }
+        }
+        return ans;
+    }
+};
