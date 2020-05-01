@@ -1,0 +1,33 @@
+/**
+ * // This is the BinaryMatrix's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class BinaryMatrix {
+ *   public:
+ *     int get(int x, int y);
+ *     vector<int> dimensions();
+ * };
+ */
+
+class Solution {
+public:
+    int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
+//      Get the dimensions.
+        vector<int> dim = binaryMatrix.dimensions();
+//      We will start from top right corner, set variables acc to that.
+        int N = dim[0], ans = -1, row = 0, col = N - 1;
+        
+        while(row < N && col >= 0){
+//          if the current val is 1 then we have and for that col and we need to find lesser val of col where 1 could be found.
+            if(binaryMatrix.get(row, col) == 1){
+                ans = col;
+                col--;
+            }
+//           if we dont get the val in that row( the val is 0 ) we will check for next row.
+//           if the value in row is zero somewhere then the values in preceeding the current value in the same row will also be 0, so no need to check before that.  
+            else{
+                row++;
+            }
+        }
+        return ans;
+    }
+};
